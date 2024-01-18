@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Luke Wortsmann - CV</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    function showPasswordInput() {
+        document.getElementById('downloadLink').style.display = 'none';
+        document.getElementById('passwordInput').style.display = 'block';
+        document.getElementById('resumePassword').focus();
+    }
+
+    function checkPassword() {
+        var correctPassword = "8130";
+        var userPassword = document.getElementById('resumePassword').value;
+        if (userPassword === correctPassword) {
+            document.getElementById('passwordInput').style.display = 'none';
+            document.getElementById('downloadLink').style.display = 'block';
+            document.getElementById('resumePassword').value = '';
+            window.open('lw_resume.pdf');
+        } else {
+            alert("Incorrect password.");
+            document.getElementById('resumePassword').value = '';
+        }
+    }
+
+    document.getElementById('downloadLink').addEventListener('click', showPasswordInput);
+
+    document.getElementById('resumePassword').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            checkPassword();
+        }
+    });
+
+    document.getElementById('submitPassword').addEventListener('click', checkPassword);
+});
+</script>
+<body>
+    <nav>
+        <a href="index.html">about</a>
+        <a href="cv.html" class="active">cv</a>
+        <a href="contact.html">contact</a>
+    </nav>
+
+    <div class="content">
+        <h1>Curriculum Vitae</h1>
+        <div id="downloadSection">
+            <a href="#" id="downloadLink" onclick="showPasswordInput()">Download my full resume (PDF)</a>
+            <div id="passwordInput" style="display:none;">
+                <input type="password" id="resumePassword" placeholder="Enter Password">
+                <button id="submitPassword">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p class="footer-text"></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,80 @@
+a, p {
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: lighter;
+    color: black;
+}
+
+h1 {
+    font-family: Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    color: black;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+nav {
+    padding: 1em;
+    text-align: left;
+}
+
+nav a {
+    margin: 0 10px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+nav a.active {
+    font-weight: normal;
+}
+
+nav a:hover {
+    font-weight: normal;
+}
+
+footer, .footer-text {
+    text-align: center;
+    margin: 0;
+}
+
+footer {
+    padding: 1em 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.content {
+    margin: 2em;
+}
+
+/* Style for the password input box */
+#resumePassword {
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: lighter;
+    margin: 5px 0;
+    padding: 5px;
+}
+
+/* Style for the submit button to look like a link */
+#submitPassword {
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: lighter;
+    background: none;
+    color: black;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#submitPassword:hover {
+    text-decoration: none;
+}
