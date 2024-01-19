@@ -5,36 +5,34 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script>
+    function showPasswordInput() {
+        document.getElementById('downloadLink').style.display = 'none';
+        document.getElementById('passwordInput').style.display = 'block';
+        document.getElementById('resumePassword').focus();
+    }
+
+    function checkPassword() {
+        // congrats, you found the password!
+        var correctPassword = "8130";
+        var userPassword = document.getElementById('resumePassword').value;
+        if (userPassword === correctPassword) {
+            document.getElementById('passwordInput').style.display = 'none';
+            document.getElementById('downloadLink').style.display = 'block';
+            document.getElementById('resumePassword').value = '';
+            window.open('lw_resume.pdf');
+        } else {
+            alert("Incorrect password.");
+            document.getElementById('resumePassword').value = '';
+        }
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
-        function showPasswordInput() {
-            document.getElementById('downloadLink').style.display = 'none';
-            document.getElementById('passwordInput').style.display = 'block';
-            document.getElementById('resumePassword').focus();
-        }
-
-        function checkPassword() {
-            // congrats, you found the password!
-            var correctPassword = "8130";
-            var userPassword = document.getElementById('resumePassword').value;
-            if (userPassword === correctPassword) {
-                document.getElementById('passwordInput').style.display = 'none';
-                document.getElementById('downloadLink').style.display = 'block';
-                document.getElementById('resumePassword').value = '';
-                window.open('lw_resume.pdf');
-            } else {
-                alert("Incorrect password.");
-                document.getElementById('resumePassword').value = '';
-            }
-        }
-
         document.getElementById('downloadLink').addEventListener('click', showPasswordInput);
-
         document.getElementById('resumePassword').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 checkPassword();
             }
         });
-
         document.getElementById('submitPassword').addEventListener('click', checkPassword);
     });
     </script>

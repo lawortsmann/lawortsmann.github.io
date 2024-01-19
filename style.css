@@ -5,6 +5,10 @@ a, p {
     color: black;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 h1 {
     font-family: Helvetica, sans-serif;
     font-size: 14px;
