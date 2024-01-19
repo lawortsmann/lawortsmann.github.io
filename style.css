@@ -1,7 +1,6 @@
 a, p {
-    font-family: Helvetica, sans-serif;
+    font-family: 'Silkscreen', Helvetica, sans-serif;
     font-size: 12px;
-    font-weight: lighter;
     color: black;
 }
 
@@ -10,9 +9,8 @@ a:hover {
 }
 
 h1 {
-    font-family: Helvetica, sans-serif;
+    font-family: 'Silkscreen', Helvetica, sans-serif;
     font-size: 14px;
-    font-weight: normal;
     color: black;
 }
 
@@ -34,11 +32,11 @@ nav a {
 }
 
 nav a.active {
-    font-weight: normal;
+    font-weight: bold;
 }
 
 nav a:hover {
-    font-weight: normal;
+    font-weight: bold;
 }
 
 footer, .footer-text {
@@ -59,18 +57,16 @@ footer {
 
 /* Style for the password input box */
 #resumePassword {
-    font-family: Helvetica, sans-serif;
+    font-family: 'Silkscreen', Helvetica, sans-serif;
     font-size: 12px;
-    font-weight: lighter;
     margin: 5px 0;
     padding: 5px;
 }
 
 /* Style for the submit button to look like a link */
 #submitPassword {
-    font-family: Helvetica, sans-serif;
+    font-family: 'Silkscreen', Helvetica, sans-serif;
     font-size: 12px;
-    font-weight: lighter;
     background: none;
     color: black;
     border: none;
