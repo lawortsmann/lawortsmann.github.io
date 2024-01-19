@@ -1,5 +1,6 @@
 a, p {
     font-family: 'Silkscreen', Helvetica, sans-serif;
+    font-weight: normal;
     font-size: 12px;
     color: black;
 }
@@ -14,7 +15,8 @@ a:hover {
 
 h1 {
     font-family: 'Silkscreen', Helvetica, sans-serif;
-    font-size: 14px;
+    font-weight: normal;
+    font-size: 16px;
     color: black;
 }
 
@@ -32,17 +34,15 @@ nav {
 
 nav a {
     margin: 0 10px;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: normal;
     text-decoration: none;
     color: black;
 }
 
-nav a.active {
+nav a.active, nav a:hover {
     font-weight: bold;
-}
-
-nav a:hover {
-    font-weight: bold;
+    text-decoration: none;
 }
 
 footer, .footer-text {
@@ -61,12 +61,14 @@ footer {
 
 .content {
     margin: 2em;
+    margin-top: 1em;
     background-color: white;
     color: black;
 }
 
 #resumePassword {
     font-family: 'Silkscreen', Helvetica, sans-serif;
+    font-weight: normal;
     font-size: 12px;
     margin: 5px 0;
     margin-right: 10px;
@@ -82,9 +84,5 @@ footer {
 
     a, p, h1, nav a {
         color: white;
-    }
-
-    a:hover, nav a:hover {
-        text-decoration: underline;
     }
 }
