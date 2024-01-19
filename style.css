@@ -15,6 +15,7 @@ a:hover {
 h1 {
     font-family: 'Silkscreen', Helvetica, sans-serif;
     font-size: 14px;
+    color: black;
 }
 
 body {
@@ -26,12 +27,14 @@ body {
 nav {
     padding: 1em;
     text-align: left;
+    background-color: white;
 }
 
 nav a {
     margin: 0 10px;
     font-size: 14px;
     text-decoration: none;
+    color: black;
 }
 
 nav a.active {
@@ -45,6 +48,8 @@ nav a:hover {
 footer, .footer-text {
     text-align: center;
     margin: 0;
+    background-color: white;
+    color: black;
 }
 
 footer {
@@ -56,13 +61,30 @@ footer {
 
 .content {
     margin: 2em;
+    background-color: white;
+    color: black;
 }
 
-/* Style for the password input box */
 #resumePassword {
     font-family: 'Silkscreen', Helvetica, sans-serif;
     font-size: 12px;
     margin: 5px 0;
     margin-right: 10px;
     padding: 5px;
+    color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+    body, nav, footer, .footer-text, .content {
+        background-color: #121212;
+        color: white;
+    }
+
+    a, p, h1, nav a {
+        color: white;
+    }
+
+    a:hover, nav a:hover {
+        text-decoration: underline;
+    }
 }
