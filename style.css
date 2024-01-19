@@ -4,6 +4,10 @@ a, p {
     color: black;
 }
 
+a {
+    text-decoration: underline;
+}
+
 a:hover {
     text-decoration: none;
 }
@@ -11,7 +15,6 @@ a:hover {
 h1 {
     font-family: 'Silkscreen', Helvetica, sans-serif;
     font-size: 14px;
-    color: black;
 }
 
 body {
@@ -60,21 +63,6 @@ footer {
     font-family: 'Silkscreen', Helvetica, sans-serif;
     font-size: 12px;
     margin: 5px 0;
+    margin-right: 10px;
     padding: 5px;
-}
-
-/* Style for the submit button to look like a link */
-#submitPassword {
-    font-family: 'Silkscreen', Helvetica, sans-serif;
-    font-size: 12px;
-    background: none;
-    color: black;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-#submitPassword:hover {
-    text-decoration: none;
 }
