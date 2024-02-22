@@ -11,10 +11,10 @@
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         var texts = [
-            'I am Luke Wortsmann.',
-            'I currently live in Chicago.',
-            'I studied Physics at the University of Illinois Urbana-Champaign.',
-            'I am a Data Scientist and Quantitative Researcher.'
+            'I am *Luke Wortsmann*.',
+            'I currently live in *Chicago*.',
+            'I studied *Physics* at the University of Illinois Urbana-Champaign.',
+            'I am a Data Scientist and *Quantitative Researcher*.',
         ];
         var typingContainers = [
             document.getElementById('typingText1'),
@@ -27,10 +27,26 @@
 
         function typeWriter(text, container, delay) {
             var i = 0;
+            var highlighting = false;
             setTimeout(function() {
                 var typingInterval = setInterval(function() {
                     if (i < text.length) {
-                        container.innerHTML += text.charAt(i);
+                        if (text.charAt(i) == '*') {
+                            if (highlighting) {
+                                highlighting = false;
+                            } else {
+                                var span = document.createElement('span');
+                                span.className = 'highlight';
+                                container.appendChild(span);
+                                highlighting = true;
+                            }
+                        } else {
+                            if (highlighting) {
+                                container.lastChild.innerHTML += text.charAt(i);
+                            } else {
+                                container.innerHTML += text.charAt(i);
+                            }
+                        }
                         i++;
                     } else {
                         clearInterval(typingInterval);
@@ -43,7 +59,7 @@
             typeWriter(text, typingContainers[index], delayBetweenTexts * index);
         });
     });
-</script>
+    </script>
 </head>
 <body>
     <nav>

@@ -66,6 +66,10 @@ footer {
     color: black;
 }
 
+.highlight {
+    color: red;
+}
+
 #resumePassword {
     font-family: 'Silkscreen', Helvetica, sans-serif;
     font-weight: normal;
