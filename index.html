@@ -1,83 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Luke Wortsmann</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var texts = [
-            'I am *Luke Wortsmann*.',
-            'I currently live in *Chicago*.',
-            'I studied *Physics* at the University of Illinois Urbana-Champaign.',
-            'I am a Quantitative Researcher, Data Scientist, and *Software Engineer*.',
-        ];
-        var typingContainers = [
-            document.getElementById('typingText1'),
-            document.getElementById('typingText2'),
-            document.getElementById('typingText3'),
-            document.getElementById('typingText4')
-        ];
-        var typingSpeed = 30;
-        var delayBetweenTexts = 300;
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Luke Wortsmann</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var texts = [
+                    "I am *Luke Wortsmann*.",
+                    "I currently live in *Chicago*.",
+                    "I studied *Physics* at the University of Illinois Urbana-Champaign.",
+                    "I am a Quantitative Researcher, Data Scientist, and *Software Engineer*.",
+                ];
+                var typingContainers = [
+                    document.getElementById("typingText1"),
+                    document.getElementById("typingText2"),
+                    document.getElementById("typingText3"),
+                    document.getElementById("typingText4"),
+                ];
+                var typingSpeed = 30;
+                var delayBetweenTexts = 300;
 
-        function typeWriter(text, container, delay) {
-            var i = 0;
-            var highlighting = false;
-            setTimeout(function() {
-                var typingInterval = setInterval(function() {
-                    if (i < text.length) {
-                        if (text.charAt(i) == '*') {
-                            if (highlighting) {
-                                highlighting = false;
+                function typeWriter(text, container, delay) {
+                    var i = 0;
+                    var highlighting = false;
+                    setTimeout(function () {
+                        var typingInterval = setInterval(function () {
+                            if (i < text.length) {
+                                if (text.charAt(i) == "*") {
+                                    if (highlighting) {
+                                        highlighting = false;
+                                    } else {
+                                        var span =
+                                            document.createElement("span");
+                                        span.className = "highlight";
+                                        container.appendChild(span);
+                                        highlighting = true;
+                                    }
+                                } else {
+                                    if (highlighting) {
+                                        container.lastChild.innerHTML +=
+                                            text.charAt(i);
+                                    } else {
+                                        container.innerHTML += text.charAt(i);
+                                    }
+                                }
+                                i++;
                             } else {
-                                var span = document.createElement('span');
-                                span.className = 'highlight';
-                                container.appendChild(span);
-                                highlighting = true;
+                                clearInterval(typingInterval);
                             }
-                        } else {
-                            if (highlighting) {
-                                container.lastChild.innerHTML += text.charAt(i);
-                            } else {
-                                container.innerHTML += text.charAt(i);
-                            }
-                        }
-                        i++;
-                    } else {
-                        clearInterval(typingInterval);
-                    }
-                }, typingSpeed);
-            }, delay);
-        }
+                        }, typingSpeed);
+                    }, delay);
+                }
 
-        texts.forEach((text, index) => {
-            typeWriter(text, typingContainers[index], delayBetweenTexts * index);
-        });
-    });
-    </script>
-</head>
-<body>
-    <nav>
-        <a href="index.html" class="active">about</a>
-        <a href="cv.html">cv</a>
-        <a href="contact.html">contact</a>
-    </nav>
+                texts.forEach((text, index) => {
+                    typeWriter(
+                        text,
+                        typingContainers[index],
+                        delayBetweenTexts * index,
+                    );
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <nav>
+            <a href="index.html" class="active">about</a>
+            <a href="cv.html">cv</a>
+            <a href="contact.html">contact</a>
+        </nav>
 
-    <div class="content">
-        <h1>About Me</h1>
-        <p id="typingText1"></p>
-        <p id="typingText2"></p>
-        <p id="typingText3"></p>
-        <p id="typingText4"></p>
-    </div>
+        <div class="content">
+            <h1>About Me</h1>
+            <p id="typingText1"></p>
+            <p id="typingText2"></p>
+            <p id="typingText3"></p>
+            <p id="typingText4"></p>
+        </div>
 
-    <footer>
-        <p class="footer-text"></p>
-    </footer>
-</body>
+        <footer>
+            <p class="footer-text"></p>
+        </footer>
+    </body>
 </html>

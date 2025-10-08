@@ -1,64 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Luke Wortsmann - CV</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-    <script>
-    function showPasswordInput() {
-        document.getElementById('downloadLink').style.display = 'none';
-        document.getElementById('passwordInput').style.display = 'block';
-        document.getElementById('resumePassword').focus();
-    }
-
-    function checkPassword() {
-        // congrats, you found the password!
-        var correctPassword = "8130";
-        var userPassword = document.getElementById('resumePassword').value;
-        if (userPassword === correctPassword) {
-            document.getElementById('passwordInput').style.display = 'none';
-            document.getElementById('downloadLink').style.display = 'block';
-            document.getElementById('resumePassword').value = '';
-            window.open('lw_resume.pdf');
-        } else {
-            alert("Incorrect password.");
-            document.getElementById('resumePassword').value = '';
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById('downloadLink').addEventListener('click', showPasswordInput);
-        document.getElementById('resumePassword').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                checkPassword();
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Luke Wortsmann - CV</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            function showPasswordInput() {
+                document.getElementById("downloadLink").style.display = "none";
+                document.getElementById("passwordInput").style.display =
+                    "block";
+                document.getElementById("resumePassword").focus();
             }
-        });
-        document.getElementById('submitPassword').addEventListener('click', checkPassword);
-    });
-    </script>
-</head>
-<body>
-    <nav>
-        <a href="index.html">about</a>
-        <a href="cv.html" class="active">cv</a>
-        <a href="contact.html">contact</a>
-    </nav>
 
-    <div class="content">
-        <h1>Curriculum Vitae</h1>
-        <p><a href="#" id="downloadLink" onclick="showPasswordInput()">Download my full resume (PDF)</a></p>
-        <div id="passwordInput" style="display:none;">
-            <input type="password" id="resumePassword" placeholder="Enter Password" title="Password is the last four digits of my phone number">
-            <a id="submitPassword">Download</a>
+            function checkPassword() {
+                // congrats, you found the password!
+                var correctPassword = "8130";
+                var userPassword =
+                    document.getElementById("resumePassword").value;
+                if (userPassword === correctPassword) {
+                    document.getElementById("passwordInput").style.display =
+                        "none";
+                    document.getElementById("downloadLink").style.display =
+                        "block";
+                    document.getElementById("resumePassword").value = "";
+                    window.open("lw_resume.pdf");
+                } else {
+                    alert("Incorrect password.");
+                    document.getElementById("resumePassword").value = "";
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                document
+                    .getElementById("downloadLink")
+                    .addEventListener("click", showPasswordInput);
+                document
+                    .getElementById("resumePassword")
+                    .addEventListener("keypress", function (event) {
+                        if (event.key === "Enter") {
+                            checkPassword();
+                        }
+                    });
+                document
+                    .getElementById("submitPassword")
+                    .addEventListener("click", checkPassword);
+            });
+        </script>
+    </head>
+    <body>
+        <nav>
+            <a href="index.html">about</a>
+            <a href="cv.html" class="active">cv</a>
+            <a href="contact.html">contact</a>
+        </nav>
+
+        <div class="content">
+            <h1>Curriculum Vitae</h1>
+            <p>
+                <a href="#" id="downloadLink" onclick="showPasswordInput()"
+                    >Download my full resume (PDF)</a
+                >
+            </p>
+            <div id="passwordInput" style="display: none">
+                <input
+                    type="password"
+                    id="resumePassword"
+                    placeholder="Enter Password"
+                    title="Password is the last four digits of my phone number"
+                />
+                <a id="submitPassword">Download</a>
+            </div>
         </div>
-    </div>
 
-    <footer>
-        <p class="footer-text"></p>
-    </footer>
-</body>
+        <footer>
+            <p class="footer-text"></p>
+        </footer>
+    </body>
 </html>
