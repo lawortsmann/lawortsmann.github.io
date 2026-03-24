@@ -1,6 +1,7 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Luke Wortsmann</title>
         <link rel="stylesheet" type="text/css" href="style.css" />
@@ -45,11 +46,12 @@
                                         highlighting = true;
                                     }
                                 } else {
+                                    var textNode =
+                                        document.createTextNode(text.charAt(i));
                                     if (highlighting) {
-                                        container.lastChild.innerHTML +=
-                                            text.charAt(i);
+                                        container.lastChild.appendChild(textNode);
                                     } else {
-                                        container.innerHTML += text.charAt(i);
+                                        container.appendChild(textNode);
                                     }
                                 }
                                 i++;
