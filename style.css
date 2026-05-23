@@ -1,9 +1,33 @@
+:root {
+    --bg: #ffffff;
+    --fg: #000000;
+    --red: #b12c3b;
+    --gold: #db9931;
+    --brown: #6f4e37;
+    --green: #325941;
+    --blue: #3e4ca1;
+    --grey-dark: #21201e;
+    --grey-light: #d3d7d1;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #121212;
+        --fg: #ffffff;
+    }
+}
+
+:root[data-theme="dark"] {
+    --bg: #121212;
+    --fg: #ffffff;
+}
+
 a,
 p {
     font-family: "Silkscreen", Helvetica, sans-serif;
     font-weight: normal;
     font-size: 12px;
-    color: black;
+    color: var(--fg);
 }
 
 a {
@@ -18,19 +42,20 @@ h1 {
     font-family: "Silkscreen", Helvetica, sans-serif;
     font-weight: normal;
     font-size: 16px;
-    color: black;
+    color: var(--fg);
 }
 
 body {
     margin: 0;
     padding: 0;
-    background-color: white;
+    background-color: var(--bg);
 }
 
 nav {
     padding: 1em;
-    text-align: left;
-    background-color: white;
+    background-color: var(--bg);
+    display: flex;
+    align-items: center;
 }
 
 nav a {
@@ -38,7 +63,17 @@ nav a {
     font-size: 16px;
     font-weight: normal;
     text-decoration: none;
-    color: black;
+}
+
+#themeToggle {
+    margin-left: auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--fg);
 }
 
 nav a.active,
@@ -47,30 +82,15 @@ nav a:hover {
     text-decoration: none;
 }
 
-footer,
-.footer-text {
-    text-align: center;
-    margin: 0;
-    background-color: white;
-    color: black;
-}
-
-footer {
-    padding: 1em 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
 .content {
     margin: 2em;
     margin-top: 1em;
-    background-color: white;
-    color: black;
+    background-color: var(--bg);
+    color: var(--fg);
 }
 
 .highlight {
-    color: red;
+    color: var(--red);
 }
 
 #resumePassword {
@@ -80,23 +100,65 @@ footer {
     margin: 5px 0;
     margin-right: 10px;
     padding: 5px;
-    color: black;
+    color: var(--fg);
+    background-color: var(--bg);
+    border: 1px solid var(--fg);
 }
 
-@media (prefers-color-scheme: dark) {
-    body,
-    nav,
-    footer,
-    .footer-text,
-    .content {
-        background-color: #121212;
-        color: white;
-    }
+.color-squares {
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    display: grid;
+    grid-template-columns: repeat(4, 22px);
+    grid-template-rows: repeat(3, 22px);
+    gap: 6px;
+    z-index: 10;
+}
 
-    a,
-    p,
-    h1,
-    nav a {
-        color: white;
-    }
+.color-squares span {
+    display: block;
+    width: 22px;
+    height: 22px;
+    transition: transform 0.15s ease;
+}
+
+.color-squares span:hover {
+    transform: scale(1.25);
+}
+
+.color-squares .sq-grey-dark {
+    background-color: var(--grey-dark);
+    grid-column: 1;
+    grid-row: 1;
+}
+.color-squares .sq-red {
+    background-color: var(--red);
+    grid-column: 1;
+    grid-row: 2;
+}
+.color-squares .sq-gold {
+    background-color: var(--gold);
+    grid-column: 2;
+    grid-row: 2;
+}
+.color-squares .sq-brown {
+    background-color: var(--brown);
+    grid-column: 3;
+    grid-row: 2;
+}
+.color-squares .sq-green {
+    background-color: var(--green);
+    grid-column: 4;
+    grid-row: 2;
+}
+.color-squares .sq-blue {
+    background-color: var(--blue);
+    grid-column: 3;
+    grid-row: 3;
+}
+.color-squares .sq-grey-light {
+    background-color: var(--grey-light);
+    grid-column: 2;
+    grid-row: 3;
 }
