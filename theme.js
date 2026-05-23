@@ -60,4 +60,21 @@ document.addEventListener("DOMContentLoaded", function () {
     setThemeToggleLabel();
     var btn = document.getElementById("themeToggle");
     if (btn) btn.addEventListener("click", toggleTheme);
+
+    // The color squares grow on :hover, but touch screens can't hover —
+    // grow them while pressed (touch or mouse) and shrink on release, so
+    // they're interactive on mobile too.
+    var squares = document.querySelectorAll(".color-squares span");
+    squares.forEach(function (sq) {
+        var grow = function () {
+            sq.classList.add("poked");
+        };
+        var shrink = function () {
+            sq.classList.remove("poked");
+        };
+        sq.addEventListener("pointerdown", grow);
+        sq.addEventListener("pointerup", shrink);
+        sq.addEventListener("pointerleave", shrink);
+        sq.addEventListener("pointercancel", shrink);
+    });
 });

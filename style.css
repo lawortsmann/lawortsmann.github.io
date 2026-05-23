@@ -74,6 +74,13 @@ nav a {
     background: none;
     border: none;
     color: var(--fg);
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.15s ease;
+}
+
+#themeToggle:hover,
+#themeToggle:active {
+    transform: scale(1.2);
 }
 
 nav a.active,
@@ -120,10 +127,14 @@ nav a:hover {
     display: block;
     width: 22px;
     height: 22px;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     transition: transform 0.15s ease;
 }
 
-.color-squares span:hover {
+.color-squares span:hover,
+.color-squares span.poked {
     transform: scale(1.25);
 }
 
@@ -161,4 +172,38 @@ nav a:hover {
     background-color: var(--grey-light);
     grid-column: 2;
     grid-row: 3;
+}
+
+/* Decorative corner icon used in place of the color squares on inner pages. */
+.corner-icon {
+    position: fixed;
+    bottom: 1em;
+    right: 0.5em;
+    width: 200px;
+    height: auto;
+    z-index: 10;
+}
+
+:root[data-theme="dark"] .corner-icon {
+    filter: invert(1);
+}
+
+/* Hand-drawn vertex labels (1-7) on the amplituhedron fade in one by one;
+   per-label animation-delay is set inline in the SVG, in numeric order. */
+.amp-label {
+    opacity: 0;
+    animation: ampLabelIn 0.4s ease-out forwards;
+}
+
+@keyframes ampLabelIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .amp-label {
+        opacity: 1;
+        animation: none;
+    }
 }

@@ -13,6 +13,78 @@
             href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap"
             rel="stylesheet"
         />
+        <script>
+            // Peter de Jong attractor, plotted live into the corner canvas:
+            //   x' = sin(a*y) - cos(b*x)
+            //   y' = sin(c*x) - cos(d*y)
+            // Points are drawn black with low alpha so overlap builds a smoky
+            // density gradient; the .corner-icon dark-mode invert flips them to
+            // white in dark theme.
+            document.addEventListener("DOMContentLoaded", function () {
+                var canvas = document.getElementById("attractor");
+                if (!canvas) return;
+                var ctx = canvas.getContext("2d");
+                var W = canvas.width;
+                var H = canvas.height;
+
+                var a = -0.709,
+                    b = 1.638,
+                    c = 0.452,
+                    d = 1.74;
+
+                var x = 0,
+                    y = 0;
+
+                function next() {
+                    var xn = Math.sin(a * y) - Math.cos(b * x);
+                    var yn = Math.sin(c * x) - Math.cos(d * y);
+                    x = xn;
+                    y = yn;
+                }
+
+                // Discard the first iterations while the orbit settles.
+                for (var w = 0; w < 50; w++) next();
+
+                // Measure the orbit's bounds so we can zoom to fit the canvas.
+                var minX = x,
+                    maxX = x,
+                    minY = y,
+                    maxY = y;
+                for (var m = 0; m < 20000; m++) {
+                    next();
+                    if (x < minX) minX = x;
+                    else if (x > maxX) maxX = x;
+                    if (y < minY) minY = y;
+                    else if (y > maxY) maxY = y;
+                }
+
+                // Fit the orbit to the canvas, then anchor it flush to the
+                // bottom-right so its corner lines up with the home-page boxes.
+                var margin = 6; // small inset so stray points aren't clipped
+                var scale = Math.min(
+                    (W - 2 * margin) / (maxX - minX || 1),
+                    (H - 2 * margin) / (maxY - minY || 1),
+                );
+                var offX = W - margin - scale * maxX;
+                var offY = H - margin - scale * maxY;
+
+                ctx.fillStyle = "rgba(0, 0, 0, 0.18)";
+
+                var perFrame = 1500;
+                var total = 120000;
+                var drawn = 0;
+
+                function step() {
+                    for (var i = 0; i < perFrame; i++) {
+                        next();
+                        ctx.fillRect(offX + x * scale, offY + y * scale, 1, 1);
+                    }
+                    drawn += perFrame;
+                    if (drawn < total) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            });
+        </script>
     </head>
     <body>
         <nav>
@@ -47,14 +119,12 @@
             </p>
         </div>
 
-        <div class="color-squares" aria-hidden="true">
-            <span class="sq-grey-dark"></span>
-            <span class="sq-red"></span>
-            <span class="sq-gold"></span>
-            <span class="sq-brown"></span>
-            <span class="sq-green"></span>
-            <span class="sq-blue"></span>
-            <span class="sq-grey-light"></span>
-        </div>
+        <canvas
+            class="corner-icon"
+            id="attractor"
+            width="400"
+            height="400"
+            aria-hidden="true"
+        ></canvas>
     </body>
 </html>
