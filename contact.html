@@ -14,12 +14,6 @@
             rel="stylesheet"
         />
         <script>
-            // Peter de Jong attractor, plotted live into the corner canvas:
-            //   x' = sin(a*y) - cos(b*x)
-            //   y' = sin(c*x) - cos(d*y)
-            // Points are drawn black with low alpha so overlap builds a smoky
-            // density gradient; the .corner-icon dark-mode invert flips them to
-            // white in dark theme.
             document.addEventListener("DOMContentLoaded", function () {
                 var canvas = document.getElementById("attractor");
                 if (!canvas) return;
@@ -27,40 +21,42 @@
                 var W = canvas.width;
                 var H = canvas.height;
 
-                var a = -0.709,
-                    b = 1.638,
-                    c = 0.452,
-                    d = 1.74;
+                var u = 0.918;
 
-                var x = 0,
-                    y = 0;
+                var X0 = -15,
+                    X1 = 12,
+                    Y0 = -7,
+                    Y1 = 11;
 
-                function next() {
-                    var xn = Math.sin(a * y) - Math.cos(b * x);
-                    var yn = Math.sin(c * x) - Math.cos(d * y);
-                    x = xn;
-                    y = yn;
+                var NUM = 3072;
+                var RAMP = 32;
+                var MAX_ITER = 8;
+
+                var x = new Float64Array(NUM);
+                var y = new Float64Array(NUM);
+                var clock = new Int32Array(NUM);
+
+                function step(ax, ay, i) {
+                    var t = 0.4 - 6 / (1 + ax[i] * ax[i] + ay[i] * ay[i]);
+                    var st = Math.sin(t),
+                        ct = Math.cos(t);
+                    var xn = 1 + u * (ax[i] * ct - ay[i] * st);
+                    ay[i] = u * (ax[i] * st + ay[i] * ct);
+                    ax[i] = xn;
                 }
 
-                // Discard the first iterations while the orbit settles.
-                for (var w = 0; w < 50; w++) next();
-
-                // Measure the orbit's bounds so we can zoom to fit the canvas.
-                var minX = x,
-                    maxX = x,
-                    minY = y,
-                    maxY = y;
-                for (var m = 0; m < 20000; m++) {
-                    next();
-                    if (x < minX) minX = x;
-                    else if (x > maxX) maxX = x;
-                    if (y < minY) minY = y;
-                    else if (y > maxY) maxY = y;
+                for (var i = 0; i < NUM; i++) {
+                    x[i] = X0 + Math.random() * (X1 - X0);
+                    y[i] = Y0 + Math.random() * (Y1 - Y0);
+                    clock[i] = -((Math.random() * RAMP) | 0);
                 }
 
-                // Fit the orbit to the canvas, then anchor it flush to the
-                // bottom-right so its corner lines up with the home-page boxes.
-                var margin = 6; // small inset so stray points aren't clipped
+                var minX = X0 - 0.5 * (X1 - X0);
+                var maxX = X1;
+                var minY = Y0 - 0.5 * (Y1 - Y0);
+                var maxY = Y1;
+
+                var margin = 12;
                 var scale = Math.min(
                     (W - 2 * margin) / (maxX - minX || 1),
                     (H - 2 * margin) / (maxY - minY || 1),
@@ -68,21 +64,64 @@
                 var offX = W - margin - scale * maxX;
                 var offY = H - margin - scale * maxY;
 
-                ctx.fillStyle = "rgba(0, 0, 0, 0.18)";
+                ctx.lineWidth = 1;
 
-                var perFrame = 1500;
-                var total = 120000;
-                var drawn = 0;
+                var reduce =
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-reduced-motion: reduce)")
+                        .matches;
 
-                function step() {
-                    for (var i = 0; i < perFrame; i++) {
-                        next();
-                        ctx.fillRect(offX + x * scale, offY + y * scale, 1, 1);
+                if (reduce) {
+                    ctx.strokeStyle = "rgba(0, 0, 0, 0.1)";
+                    ctx.beginPath();
+                    for (var fr = 0; fr < 240; fr++) {
+                        for (var k0 = 0; k0 < NUM; k0++) {
+                            var sx0 = offX + x[k0] * scale,
+                                sy0 = offY + y[k0] * scale;
+                            step(x, y, k0);
+                            ctx.moveTo(sx0, sy0);
+                            ctx.lineTo(
+                                offX + x[k0] * scale,
+                                offY + y[k0] * scale,
+                            );
+                        }
                     }
-                    drawn += perFrame;
-                    if (drawn < total) requestAnimationFrame(step);
+                    ctx.stroke();
+                    return;
                 }
-                requestAnimationFrame(step);
+
+                function tickOnce() {
+                    ctx.globalCompositeOperation = "destination-out";
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+                    ctx.fillRect(0, 0, W, H);
+                    ctx.globalCompositeOperation = "source-over";
+
+                    ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
+                    ctx.beginPath();
+                    for (var k = 0; k < NUM; k++) {
+                        var c = clock[k]++;
+                        if (c < 0 || c >= MAX_ITER) continue;
+                        var px0 = offX + x[k] * scale,
+                            py0 = offY + y[k] * scale;
+                        step(x, y, k);
+                        ctx.moveTo(px0, py0);
+                        ctx.lineTo(offX + x[k] * scale, offY + y[k] * scale);
+                    }
+                    ctx.stroke();
+                }
+
+                var TOTAL = RAMP + MAX_ITER;
+                var FRAME_DELAY = 70;
+                var iter = 0;
+                function frame() {
+                    tickOnce();
+                    if (++iter < TOTAL) {
+                        setTimeout(function () {
+                            requestAnimationFrame(frame);
+                        }, FRAME_DELAY);
+                    }
+                }
+                requestAnimationFrame(frame);
             });
         </script>
     </head>
@@ -122,7 +161,7 @@
         <canvas
             class="corner-icon"
             id="attractor"
-            width="400"
+            width="600"
             height="400"
             aria-hidden="true"
         ></canvas>

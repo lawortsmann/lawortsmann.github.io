@@ -17,6 +17,11 @@
     }
 }
 
+:root[data-theme="light"] {
+    --bg: #ffffff;
+    --fg: #000000;
+}
+
 :root[data-theme="dark"] {
     --bg: #121212;
     --fg: #ffffff;
@@ -188,11 +193,36 @@ nav a:hover {
     filter: invert(1);
 }
 
+/* The contact-page attractor canvas is wider (3:2) and sits in the page's
+   bottom-right corner with a small margin; its field of points extends up and
+   to the left while the attractor itself stays anchored near the corner. */
+#attractor {
+    bottom: 0.5em;
+    right: 0.5em;
+    width: 380px;
+}
+
 /* Hand-drawn vertex labels (1-7) on the amplituhedron fade in one by one;
    per-label animation-delay is set inline in the SVG, in numeric order. */
 .amp-label {
     opacity: 0;
     animation: ampLabelIn 0.4s ease-out forwards;
+}
+
+.amp-edge {
+    opacity: 0;
+    animation: ampLabelIn 0.3s ease-out forwards;
+}
+
+.amp-node {
+    opacity: 0;
+    animation: ampLabelIn 0.3s ease-out forwards;
+}
+
+.amp-link {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: ampLinkDraw 0.4s ease-out forwards;
 }
 
 @keyframes ampLabelIn {
@@ -201,9 +231,22 @@ nav a:hover {
     }
 }
 
+@keyframes ampLinkDraw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .amp-label {
+    .amp-label,
+    .amp-edge,
+    .amp-node {
         opacity: 1;
+        animation: none;
+    }
+
+    .amp-link {
+        stroke-dashoffset: 0;
         animation: none;
     }
 }
