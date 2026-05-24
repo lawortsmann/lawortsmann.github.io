@@ -314,7 +314,7 @@ function initCvGate() {
       document.getElementById("passwordInput").style.display = "none";
       document.getElementById("downloadLink").style.display = "block";
       document.getElementById("resumePassword").value = "";
-      window.open("lw_resume.pdf");
+      window.open("lwcv.pdf");
     } else {
       alert("Incorrect password.");
       document.getElementById("resumePassword").value = "";
