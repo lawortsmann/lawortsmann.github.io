@@ -203,7 +203,7 @@ function initAttractor() {
     Y0 = -7,
     Y1 = 11;
 
-  var NUM = 2048 + 512;
+  var NUM = 2560;
   var RAMP = 30;
   var MAX_FRAMES = 32;
   var TRAIL = 12;
