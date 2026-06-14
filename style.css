@@ -214,11 +214,6 @@ nav a:hover {
     animation: ampLabelIn 0.3s ease-out forwards;
 }
 
-.amp-node {
-    opacity: 0;
-    animation: ampLabelIn 0.3s ease-out forwards;
-}
-
 .amp-link {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
@@ -239,13 +234,36 @@ nav a:hover {
 
 @media (prefers-reduced-motion: reduce) {
     .amp-label,
-    .amp-edge,
-    .amp-node {
+    .amp-edge {
         opacity: 1;
         animation: none;
     }
 
     .amp-link {
+        stroke-dashoffset: 0;
+        animation: none;
+    }
+}
+
+.laby-trace {
+    fill: none;
+    stroke: #000000;
+    stroke-width: 14;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: labyDraw 4s ease-in-out forwards;
+}
+
+@keyframes labyDraw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .laby-trace {
         stroke-dashoffset: 0;
         animation: none;
     }

@@ -203,11 +203,12 @@ function initAttractor() {
     Y0 = -7,
     Y1 = 11;
 
-  var NUM = 2560;
-  var RAMP = 30;
+  var NUM = 2048;
+  var RAMP = 24;
   var MAX_FRAMES = 32;
-  var TRAIL = 12;
-  var BASE_ALPHA = 0.3;
+  var TRAIL = 8;
+  var BASE_ALPHA = 0.2;
+  var FRAME_DELAY = 65;
 
   var minX = X0 - 0.5 * (X1 - X0);
   var maxX = X1;
@@ -228,11 +229,13 @@ function initAttractor() {
   var ptsX = new Float64Array(NUM * NP);
   var ptsY = new Float64Array(NUM * NP);
   var start = new Int32Array(NUM);
+  var trailLen = new Uint8Array(NUM);
 
   for (var k = 0; k < NUM; k++) {
     var px = X0 + Math.random() * (X1 - X0);
     var py = Y0 + Math.random() * (Y1 - Y0);
     start[k] = (Math.random() * RAMP) | 0;
+    trailLen[k] = TRAIL + start[k];
     var len = MAX_FRAMES - start[k];
     for (var n = 0; n <= len; n++) {
       ptsX[k * NP + n] = offX + px * scale;
@@ -267,26 +270,41 @@ function initAttractor() {
     return;
   }
 
-  var FRAME_DELAY = 70;
   var F = 0;
+
+  var N_BUCKETS = MAX_FRAMES;
+  var segs = [];
+  for (var si = 0; si < N_BUCKETS; si++) segs.push([]);
 
   function frame() {
     ctx.clearRect(0, 0, W, H);
-    for (var segAge = 0; segAge < MAX_FRAMES; segAge++) {
-      ctx.strokeStyle =
-        "rgba(0, 0, 0, " + BASE_ALPHA * Math.max(0, 1 - segAge / TRAIL) + ")";
-      ctx.beginPath();
-      for (var p = 0; p < NUM; p++) {
-        var a = F - start[p];
-        if (a < 0) continue;
+    for (var ci = 0; ci < N_BUCKETS; ci++) segs[ci].length = 0;
+
+    for (var p = 0; p < NUM; p++) {
+      var a = F - start[p];
+      if (a <= 0) continue;
+      var tl = trailLen[p];
+      for (var segAge = 0; segAge < tl; segAge++) {
         var j = a - 1 - segAge;
-        if (j < 0) continue;
-        var b = p * NP + j;
+        if (j < 0) break;
+        var bucket = Math.min(N_BUCKETS - 1, ((N_BUCKETS * segAge) / tl) | 0);
+        segs[bucket].push(p * NP + j);
+      }
+    }
+
+    for (var bk = N_BUCKETS - 1; bk >= 0; bk--) {
+      if (segs[bk].length === 0) continue;
+      ctx.strokeStyle =
+        "rgba(0, 0, 0, " + BASE_ALPHA * (1 - bk / N_BUCKETS) + ")";
+      ctx.beginPath();
+      for (var sk = 0; sk < segs[bk].length; sk++) {
+        var b = segs[bk][sk];
         ctx.moveTo(ptsX[b], ptsY[b]);
         ctx.lineTo(ptsX[b + 1], ptsY[b + 1]);
       }
       ctx.stroke();
     }
+
     F++;
     if (F <= MAX_FRAMES) {
       setTimeout(function () {
@@ -334,8 +352,24 @@ function initCvGate() {
     .addEventListener("click", checkPassword);
 }
 
+function initAmpReducedMotion() {
+  var svg = document.getElementById("amplituhedron");
+  if (!svg) return;
+  if (
+    !window.matchMedia ||
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  )
+    return;
+  svg.querySelectorAll(".amp-node").forEach(function (node) {
+    var anim = node.querySelector("animate");
+    if (anim) node.removeChild(anim);
+    node.setAttribute("fill", "#ffffff");
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   initThemeAndSquares();
+  initAmpReducedMotion();
   if (document.getElementById("typingText1")) initTypewriter();
   if (document.getElementById("attractor")) initAttractor();
   if (document.getElementById("downloadLink")) initCvGate();
