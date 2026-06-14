@@ -245,7 +245,7 @@ nav a:hover {
     }
 }
 
-.laby-trace {
+.labyrinth-trace {
     fill: none;
     stroke: #000000;
     stroke-width: 14;
@@ -253,17 +253,17 @@ nav a:hover {
     stroke-linejoin: round;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
-    animation: labyDraw 4s ease-in-out forwards;
+    animation: labyrinthDraw 4s ease-in-out forwards;
 }
 
-@keyframes labyDraw {
+@keyframes labyrinthDraw {
     to {
         stroke-dashoffset: 0;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .laby-trace {
+    .labyrinth-trace {
         stroke-dashoffset: 0;
         animation: none;
     }
